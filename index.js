@@ -46,6 +46,10 @@ client.on('messageCreate', async message => {
     if (message.content.startsWith('!randomize')) {
         const args = message.content.split(' ');
         const name = args[1];
+        const author = message.author;
+        const username = author.username; // Nombre de usuario
+        const userId = author.id; // ID de usuario
+        const avatarURL = author.displayAvatarURL();
         
         if (!name) {
             message.channel.send('Por favor, especifica un nombre. Ejemplo: `!randomize [nombre]`');
@@ -64,7 +68,8 @@ client.on('messageCreate', async message => {
 
         // Crea el embed
         const embed = new EmbedBuilder()
-        .setColor(randomPersonaje.backgroundGradientColors?.[0]?.replace(/ff$/, '') || '#0099ff') // Color del embed, remueve el 'ff' y usa color predeterminado si no hay colores
+            .setAuthor({ name: username, iconURL: avatarURL}) // Nombre y avatar del autor
+            .setColor(randomPersonaje.backgroundGradientColors?.[0]?.replace(/ff$/, '') || '#0099ff') // Color del embed, remueve el 'ff' y usa color predeterminado si no hay colores
             .setTitle(`¡${name}, tu rol es: ${randomRole}!`) // Usar randomRole aquí
             .setDescription(`Jugarás con: **${randomPersonaje.displayName}**`)
             .setThumbnail(randomPersonaje.role.displayIcon) // Icono pequeño del personaje
