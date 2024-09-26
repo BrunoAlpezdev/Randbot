@@ -155,7 +155,8 @@ client.on('messageCreate', async message => {
                 return;
             }
 
-            const randomPersonajeMap = personajesPorMapa[Math.floor(Math.random() * personajesPorMapa.length)];
+            const randomPersonajeMapName = personajesPorMapa[Math.floor(Math.random() * personajesPorMapa.length)];
+            const randomPersonajeMap = personajes[randomRole].find(agent => agent.displayName === randomPersonajeMapName);
             const mapImage = await getMap(capitalizeFirstLetter(map)); // Use await here
 
             const mapEmbed = new EmbedBuilder()
@@ -171,5 +172,6 @@ client.on('messageCreate', async message => {
         }
     }
 });
+
 
 client.login(process.env.BOT_TOKEN);
