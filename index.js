@@ -132,7 +132,8 @@ client.on('messageCreate', async message => {
         const randomRole = roles[Math.floor(Math.random() * roles.length)]; 
         const randomPersonaje = personajes[randomRole][Math.floor(Math.random() * personajes[randomRole].length)];
 
-        const embed = new EmbedBuilder()
+        if (!map) {
+            const embed = new EmbedBuilder()
             .setAuthor({ name: username, iconURL: avatarURL })
             .setColor(randomPersonaje.backgroundGradientColors?.[0]?.replace(/ff$/, '') || '#0099ff') 
             .setTitle(`¡${capitalizeFirstLetter(username)}, tu rol es: ${randomRole}!`) 
@@ -140,8 +141,10 @@ client.on('messageCreate', async message => {
             .setThumbnail(randomPersonaje.role.displayIcon)
             .setImage(randomPersonaje.fullPortrait) 
             .setTimestamp();
-
-        message.channel.send({ embeds: [embed] });
+            
+            message.channel.send({ embeds: [embed] });   
+            return;
+        }
 
         if (map) {
             if (!mapas[map]) {
@@ -169,6 +172,7 @@ client.on('messageCreate', async message => {
                 .setTimestamp();
 
             message.channel.send({ embeds: [mapEmbed] });
+            return;
         }
     }
 });
