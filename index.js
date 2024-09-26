@@ -1,3 +1,4 @@
+// Release 1.0
 const { Client, GatewayIntentBits, EmbedBuilder } = require('discord.js');
 const express = require('express'); 
 const axios = require('axios');

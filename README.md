@@ -68,4 +68,4 @@ Este proyecto está licenciado bajo la Licencia MIT. Consulta el archivo `LICENS
 
 ## Contacto
 
-Para preguntas o soporte, por favor abre un issue en el repositorio o contacta a [brunoalpezdev@gmail.com](mailto:brunoalpezdev@gmail.com).
+Para preguntas o soporte, por favor abre un issue en el repositorio o contacta a [brunoalpezdev@gmail.com](mailto:brunoalpezdev@gmail.com)
