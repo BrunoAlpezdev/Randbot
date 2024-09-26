@@ -27,8 +27,9 @@ client.on('messageCreate', async message => {
     if (message.author.bot) return; 
     const args = message.content.split(' ');
     const map = args[1];
+    const rol = args[2];
 
-    if (message.content.startsWith(`${PREFIX}randomize`)) {
+    if (message.content.startsWith(`${PREFIX}randomize`) || message.content.startsWith(`${PREFIX}r`)) {
         const author = message.author;
         const username = author.username; 
         const avatarURL = author.displayAvatarURL(); 
@@ -75,6 +76,32 @@ client.on('messageCreate', async message => {
                 .setTimestamp();
 
             message.channel.send({ embeds: [mapEmbed] });
+            return;
+        }
+
+        if (rol) {
+            if (!roles.includes(rol)) {
+                message.channel.send(`El rol "${rol}" no es válido. Por favor, elige uno de los siguientes: ${roles.join(', ')}`);
+                return;
+            }
+
+            const personajesPorRol = personajes[rol];
+            if (!personajesPorRol || personajesPorRol.length === 0) {
+                message.channel.send(`No hay personajes disponibles para el rol "${rol}".`);
+                return;
+            }
+
+            const randomPersonajeRol = personajesPorRol[Math.floor(Math.random() * personajesPorRol.length)];
+            const rolEmbed = new EmbedBuilder()
+                .setAuthor({ name: username, iconURL: avatarURL })
+                .setColor(randomPersonajeRol.backgroundGradientColors?.[0]?.replace(/ff$/, '') || '#0099ff')
+                .setTitle(`¡${capitalizeFirstLetter(username)}, tu rol es: ${rol}!`)
+                .setDescription(`Jugarás con: **${randomPersonajeRol.displayName}**`)
+                .setThumbnail(randomPersonajeRol.displayIcon)
+                .setImage(randomPersonajeRol.fullPortrait)
+                .setTimestamp();
+
+            message.channel.send({ embeds: [rolEmbed] });
             return;
         }
     }
