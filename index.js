@@ -64,7 +64,7 @@ client.on('messageCreate', async message => {
 
         // Crea el embed
         const embed = new EmbedBuilder()
-            .setColor(randomPersonaje.backgroundGradientColors?.[0] || '#0099ff') // Color del embed, color predeterminado si no hay colores
+        .setColor(randomPersonaje.backgroundGradientColors?.[0]?.replace(/ff$/, '') || '#0099ff') // Color del embed, remueve el 'ff' y usa color predeterminado si no hay colores
             .setTitle(`¡${name}, tu rol es: ${randomRole}!`) // Usar randomRole aquí
             .setDescription(`Jugarás con: **${randomPersonaje.displayName}**\n\n${randomPersonaje.description}`)
             .setThumbnail(randomPersonaje.displayIcon) // Icono pequeño del personaje
