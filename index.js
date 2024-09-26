@@ -1,5 +1,4 @@
-const { Client, GatewayIntentBits } = require('discord.js');
-const { MessageEmbed } = require('discord.js');
+const { Client, GatewayIntentBits, EmbedBuilder  } = require('discord.js');
 const axios = require('axios');
 
 const client = new Client({
@@ -17,13 +16,6 @@ const rolesMapping = {
     "Iniciador": "Initiator",
     "Centinela": "Sentinel"
 };
-const personajes = {
-    Duelista: ['Jett', 'Raze', 'Phoenix', 'Yoru', 'Reyna', 'Iso', 'Neon'],
-    Iniciador: ['Breach', 'Sova', 'KAY/O', 'Skye', 'Fade', 'Gekko'],
-    Controlador: ['Omen', 'Viper', 'Brimstone', 'Astra', 'Clove', 'Harbor'],
-    Centinela: ['Cypher', 'Killjoy', 'Sage', 'Chamber', 'Deadlock', 'Vyse']
-};
-
 
 client.once('ready', () => {
     console.log('¡Bot en línea!');
@@ -59,15 +51,16 @@ client.on('messageCreate', async (message) => {
             if (filteredAgents.length > 0) {
                 const randomAgent = filteredAgents[Math.floor(Math.random() * filteredAgents.length)];
 
-                // Crear un embed
-                const embed = new MessageEmbed()
-                    .setColor('#0099ff') // Color del borde
-                    .setTitle(`${name}, tu Rol es: ${randomRoleSpanish}`)
-                    .setDescription(`¡Jugarás con: ${randomAgent.displayName}!`)
-                    .setThumbnail(`https://valorant-api.com/v1/agents/${randomAgent.uuid}/displayicon`) // URL del ícono del rol
-                    .setFooter('¡Buena suerte!');
+                const embed = new EmbedBuilder()
+                    .setColor('#0099ff')
+                    .setTitle('Personaje Randomizado')
+                    .setDescription(`${name}, tu rol es: **${randomRole}**`)
+                    .addFields(
+                        { name: 'Personaje', value: randomPersonaje, inline: true }
+                    )
+                    .setThumbnail(`https://valorant-api.com/v1/agents/${randomPersonaje.id}/displayicon`) // Cambia esto si necesitas una URL diferente para el icono
+                    .setTimestamp();
 
-                // Enviar el embed
                 message.channel.send({ embeds: [embed] });
             } else {
                 message.channel.send(`No se encontraron agentes jugables para el rol '${randomRoleSpanish}'.`);
