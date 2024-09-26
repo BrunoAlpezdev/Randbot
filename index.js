@@ -9,10 +9,12 @@ const client = new Client({
 });
 
 const roles = ['Duelista', 'Iniciador', 'Controlador', 'Centinela'];
-const personajes = [{duelista: ['Jett', 'Raze', 'Phoenix', 'Yoru', 'Reyna', 'Iso', 'Neon']},
-                    {iniciador: ['Breach', 'Sova', 'KAY/O', 'Skye', 'Fade', 'Gekko']},
-                    {controlador: ['Omen', 'Viper', 'Brimstone', 'Astra', 'Clove', 'Harbor']},
-                    {centinela: ['Cypher', 'Killjoy', 'Sage', 'Chamber', 'Deadlock', 'Vyse']}];
+const personajes = {
+    Duelista: ['Jett', 'Raze', 'Phoenix', 'Yoru', 'Reyna', 'Iso', 'Neon'],
+    Iniciador: ['Breach', 'Sova', 'KAY/O', 'Skye', 'Fade', 'Gekko'],
+    Controlador: ['Omen', 'Viper', 'Brimstone', 'Astra', 'Clove', 'Harbor'],
+    Centinela: ['Cypher', 'Killjoy', 'Sage', 'Chamber', 'Deadlock', 'Vyse']
+};
 
 
 client.once('ready', () => {
@@ -28,7 +30,7 @@ client.on('messageCreate', message => {
     if (message.content.startsWith('!randomize')) {
         const args = message.content.split(' ');
         const name = args[1];
-        const randomRole = args[1];
+        const randomRole = roles[Math.floor(Math.random() * roles.length)];
 
         if (!name) {
             message.channel.send('Por favor, especifica un nombre. Ejemplo: `!randomize [nombre]`');
