@@ -102,7 +102,7 @@ async function getMap(mapName) {
     try {
         const response = await axios.get('https://valorant-api.com/v1/maps');
         const maps = response.data.data;
-        const map = maps.find(map => map.displayName.toLowerCase() === mapName.toLowerCase());
+        const map = maps.find(map => capitalizeFirstLetter(map.displayName) === capitalizeFirstLetter(mapName));
         return map ? map.splash : null; // Return null if the map isn't found
     } catch (error) {
         console.error('Error al obtener los mapas:', error);
