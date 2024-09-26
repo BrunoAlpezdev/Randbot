@@ -19,13 +19,10 @@ const personajes = {
 
 client.once('ready', () => {
     console.log('¡Bot en línea!');
-    
 });
 
 client.on('messageCreate', message => {
     if (message.author.bot) return; // Ignora los mensajes de otros bots
-
-    
 
     if (message.content.startsWith('!randomize')) {
         const args = message.content.split(' ');
@@ -38,14 +35,10 @@ client.on('messageCreate', message => {
         }
 
         // Verificar si el rol está definido en personajes
-        if (personajes[randomRole]) {
-            const randomPersonaje = personajes[randomRole][Math.floor(Math.random() * personajes[randomRole].length)];
-            message.channel.send(`${name}. Tu Rol es: ${randomRole}. Jugarás con:${randomPersonaje}`);
-        } else {
-            message.channel.send(`El rol '${randomRole}' no está definido.`);
-            
-            console.error(`El rol '${randomRole}' no está definido en personajes.`);
-        }
+
+        const randomPersonaje = personajes[randomRole][Math.floor(Math.random() * personajes[randomRole].length)];
+        message.channel.send(`${name}. Tu Rol es: ``${randomRole}``. Jugarás con:``${randomPersonaje}```);
+
     }
 });
 
