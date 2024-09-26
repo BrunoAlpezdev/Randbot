@@ -1,4 +1,4 @@
-// Release 1.0
+// Release 1.1
 const { personajes, capitalizeFirstLetter, loadAgentes, getMap } = require('./methods.js');
 const { Client, GatewayIntentBits, EmbedBuilder } = require('discord.js');
 const { PREFIX, roles, mapas } = require('./data.js');

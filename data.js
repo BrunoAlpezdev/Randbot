@@ -1,6 +1,7 @@
-export const PREFIX = '!';
-export const roles = ['Duelista', 'Centinela', 'Controlador', 'Iniciador'];
-export const mapas = {
+// Release 1.1
+const PREFIX = '!';
+const roles = ['Duelista', 'Centinela', 'Controlador', 'Iniciador'];
+const mapas = {
     'Ascent': {
         'Duelista': ['Jett', 'Reyna', 'Phoenix'],
         'Centinela': ['Cypher', 'Killjoy'],
@@ -55,4 +56,10 @@ export const mapas = {
         'Controlador': ['Viper', 'Astra', 'Harbor'],
         'Iniciador': ['Sova', 'Skye', 'Gekko', 'Breach', 'KAY/O', 'Fade']
     }
+};
+
+module.exports = {
+    PREFIX,
+    roles,
+    mapas
 };

@@ -1,12 +1,13 @@
+// Release 1.1
 const axios = require('axios');
 
-export const personajes = {}; 
+const personajes = {}; 
 
-export function capitalizeFirstLetter(string) {
+function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-export async function loadAgentes() {
+async function loadAgentes() {
     try {
         const response = await axios.get('https://valorant-api.com/v1/agents?language=es-ES');
         const agentes = response.data.data;
@@ -27,7 +28,7 @@ export async function loadAgentes() {
     }
 }
 
-export async function getMap(mapName) {
+async function getMap(mapName) {
     try {
         const response = await axios.get('https://valorant-api.com/v1/maps');
         const maps = response.data.data;
@@ -38,3 +39,10 @@ export async function getMap(mapName) {
         return null; // Handle errors gracefully
     }
 }
+
+module.exports = {
+    personajes,
+    capitalizeFirstLetter,
+    loadAgentes,
+    getMap
+};
