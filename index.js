@@ -29,6 +29,42 @@ client.on('messageCreate', async message => {
     const map = args[1];
     const rol = args[2];
 
+    if (message.content.startsWith(`${PREFIX}roles`)) {
+        message.channel.send(`Roles disponibles: ${roles.join(', ')}`);
+        return;
+    }
+
+    if (message.content.startsWith(`${PREFIX}personajes`)) {
+        const personajesArray = Object.values(personajes).flat().map(agent => agent.displayName);
+        message.channel.send(`Personajes disponibles: ${personajesArray.join(', ')}`);
+        return;
+    }
+
+    if (message.content.startsWith(`${PREFIX}mapas`)) {
+        message.channel.send(`Mapas disponibles: ${Object.keys(mapas).join(', ')}`);
+        return;
+    }
+
+    if (message.content.startsWith(`${PREFIX}help`)) {
+        const embed = new EmbedBuilder()
+            .setColor('#0099ff')
+            .setTitle('¡Comandos disponibles!')
+            .setDescription(`¡Hola! Soy Randbot, técnicamente un Valorant Randomizer xd, te ayudaré a elegir un personaje aleatorio para jugar en Valorant. ¡Aquí tienes los comandos disponibles!`)
+            .addFields(
+                { name: `${PREFIX}randomize`, value: `Genera un personaje aleatorio para jugar en Valorant.` },
+                { name: `${PREFIX}randomize [mapa]`, value: `Genera un personaje aleatorio para jugar en Valorant en un mapa específico. Ejemplo: ${PREFIX}randomize Ascent` },
+                { name: `${PREFIX}randomize [mapa] [rol]`, value: `Genera un personaje aleatorio para jugar en Valorant en un mapa y rol específico. Ejemplo: ${PREFIX}randomize Ascent Duelista` },
+                { name: `${PREFIX}roles`, value: `Muestra los roles disponibles en Valorant.` },
+                { name: `${PREFIX}personajes`, value: `Muestra los personajes disponibles en Valorant.` },
+                { name: `${PREFIX}mapas`, value: `Muestra los mapas disponibles en Valorant.` },
+                { name: `${PREFIX}help`, value: `Muestra los comandos disponibles.` },
+            )
+            .setTimestamp();
+        
+        message.channel.send({ embeds: [embed] });
+        return;
+    }
+
     if (message.content.startsWith(`${PREFIX}randomize`) || message.content.startsWith(`${PREFIX}r`)) {
         const author = message.author;
         const username = author.username; 
@@ -63,6 +99,32 @@ client.on('messageCreate', async message => {
                 return;
             }
 
+            if (rol) {
+                if (!roles.includes(rol)) {
+                    message.channel.send(`El rol "${rol}" no es válido. Por favor, elige uno de los siguientes: ${roles.join(', ')}`);
+                    return;
+                }
+    
+                const personajesPorRol = personajes[rol];
+                if (!personajesPorRol || personajesPorRol.length === 0) {
+                    message.channel.send(`No hay personajes disponibles para el rol "${rol}".`);
+                    return;
+                }
+    
+                const randomPersonajeRol = personajesPorRol[Math.floor(Math.random() * personajesPorRol.length)];
+                const rolEmbed = new EmbedBuilder()
+                    .setAuthor({ name: username, iconURL: avatarURL })
+                    .setColor(randomPersonajeRol.backgroundGradientColors?.[0]?.replace(/ff$/, '') || '#0099ff')
+                    .setTitle(`¡${capitalizeFirstLetter(username)}, elegiste el rol: ${rol}!`)
+                    .setDescription(`Jugarás con: **${randomPersonajeRol.displayName}**`)
+                    .setThumbnail(randomPersonajeRol.displayIcon)
+                    .setImage(randomPersonajeRol.fullPortrait)
+                    .setTimestamp();
+    
+                message.channel.send({ embeds: [rolEmbed] });
+                return;
+            }
+
             const randomPersonajeMapName = personajesPorMapa[Math.floor(Math.random() * personajesPorMapa.length)];
             const randomPersonajeMap = personajes[randomRole].find(agent => agent.displayName === randomPersonajeMapName);
             const mapImage = await getMap(capitalizeFirstLetter(map))
@@ -79,31 +141,7 @@ client.on('messageCreate', async message => {
             return;
         }
 
-        if (rol) {
-            if (!roles.includes(rol)) {
-                message.channel.send(`El rol "${rol}" no es válido. Por favor, elige uno de los siguientes: ${roles.join(', ')}`);
-                return;
-            }
-
-            const personajesPorRol = personajes[rol];
-            if (!personajesPorRol || personajesPorRol.length === 0) {
-                message.channel.send(`No hay personajes disponibles para el rol "${rol}".`);
-                return;
-            }
-
-            const randomPersonajeRol = personajesPorRol[Math.floor(Math.random() * personajesPorRol.length)];
-            const rolEmbed = new EmbedBuilder()
-                .setAuthor({ name: username, iconURL: avatarURL })
-                .setColor(randomPersonajeRol.backgroundGradientColors?.[0]?.replace(/ff$/, '') || '#0099ff')
-                .setTitle(`¡${capitalizeFirstLetter(username)}, tu rol es: ${rol}!`)
-                .setDescription(`Jugarás con: **${randomPersonajeRol.displayName}**`)
-                .setThumbnail(randomPersonajeRol.displayIcon)
-                .setImage(randomPersonajeRol.fullPortrait)
-                .setTimestamp();
-
-            message.channel.send({ embeds: [rolEmbed] });
-            return;
-        }
+        
     }
 });
 
