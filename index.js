@@ -24,7 +24,7 @@ async function loadAgentes() {
                 if (!personajes[role]) {
                     personajes[role] = [];
                 }
-                personajes[role].push(agent.displayName); // Almacena el nombre del agente
+                personajes[role].push(agent); // Almacena el objeto del agente completo
             }
         });
 
@@ -58,10 +58,11 @@ client.on('messageCreate', async message => {
 
         // Crea el embed
         const embed = new EmbedBuilder()
-            .setColor('#0099ff')
-            .setTitle(`¡${name}, tu rol es: ${randomRole}!`)
-            .setDescription(`Jugarás con: ${randomPersonaje}`)
-            .setThumbnail(`https://valorant-api.com/v1/agents/${randomPersonaje.id}/displayIcon`) // Asegúrate de usar el ID correcto
+            .setColor(randomPersonaje.backgroundGradientColors[0]) // Color del embed
+            .setTitle(`¡${name}, te tocó: ${randomRole}!`)
+            .setDescription(`Jugarás con: ${randomPersonaje.displayName}`)
+            .setThumbnail(randomPersonaje.role.displayIcon) // Thumbnail del ícono
+            .setImage(randomPersonaje.fullPortrait) // Imagen grande del personaje
             .setTimestamp();
 
         message.channel.send({ embeds: [embed] });
