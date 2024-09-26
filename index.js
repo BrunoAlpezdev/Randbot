@@ -1,4 +1,5 @@
 const { Client, GatewayIntentBits } = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const axios = require('axios');
 
 const client = new Client({
@@ -10,6 +11,12 @@ const client = new Client({
 });
 
 const roles = ['Duelista', 'Iniciador', 'Controlador', 'Centinela'];
+const rolesMapping = {
+    "Duelista": "Duelist",
+    "Controlador": "Controller",
+    "Iniciador": "Initiator",
+    "Centinela": "Sentinel"
+};
 const personajes = {
     Duelista: ['Jett', 'Raze', 'Phoenix', 'Yoru', 'Reyna', 'Iso', 'Neon'],
     Iniciador: ['Breach', 'Sova', 'KAY/O', 'Skye', 'Fade', 'Gekko'],
@@ -28,7 +35,8 @@ client.on('messageCreate', async (message) => {
     if (message.content.startsWith('!randomize')) {
         const args = message.content.split(' ');
         const name = args[1];
-        const randomRole = roles[Math.floor(Math.random() * roles.length)];
+        const randomRoleSpanish = roles[Math.floor(Math.random() * roles.length)];
+        const randomRole = rolesMapping[randomRoleSpanish]; // Obtener el rol en inglés
 
         if (!name) {
             message.channel.send('Por favor, especifica un nombre. Ejemplo: `!randomize [nombre]`');
@@ -50,9 +58,19 @@ client.on('messageCreate', async (message) => {
             // Elegir un agente aleatorio del rol filtrado
             if (filteredAgents.length > 0) {
                 const randomAgent = filteredAgents[Math.floor(Math.random() * filteredAgents.length)];
-                message.channel.send(`${name}. Tu Rol es: \`${randomRole}\`. Jugarás con: \`${randomAgent.displayName}\``);
+
+                // Crear un embed
+                const embed = new MessageEmbed()
+                    .setColor('#0099ff') // Color del borde
+                    .setTitle(`${name}, tu Rol es: ${randomRoleSpanish}`)
+                    .setDescription(`¡Jugarás con: ${randomAgent.displayName}!`)
+                    .setThumbnail(`https://valorant-api.com/v1/agents/${randomAgent.uuid}/displayicon`) // URL del ícono del rol
+                    .setFooter('¡Buena suerte!');
+
+                // Enviar el embed
+                message.channel.send({ embeds: [embed] });
             } else {
-                message.channel.send(`No se encontraron agentes jugables para el rol '${randomRole}'.`);
+                message.channel.send(`No se encontraron agentes jugables para el rol '${randomRoleSpanish}'.`);
             }
         } catch (error) {
             console.error('Error al obtener los agentes:', error);
