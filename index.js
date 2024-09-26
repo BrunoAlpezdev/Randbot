@@ -49,13 +49,7 @@ client.on('messageCreate', async message => {
         const userId = author.id; // ID de usuario
         const avatarURL = author.displayAvatarURL(); // URL del avatar
 
-        const randomRole = roles[Math.floor(Math.random() * roles.length)];
-
-        // Verificar si hay personajes disponibles para el rol
-        if (!personajes[randomRole] || personajes[randomRole].length === 0) {
-            message.channel.send(`No hay personajes disponibles para el rol: ${randomRole}`);
-            return;
-        }
+        const randomRole = roles[Math.floor(Math.random() * roles.length)]; // Obtiene un rol aleatorio
 
         const randomPersonaje = personajes[randomRole][Math.floor(Math.random() * personajes[randomRole].length)];
 
