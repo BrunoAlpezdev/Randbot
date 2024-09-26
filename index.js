@@ -1,9 +1,9 @@
 const { Client, GatewayIntentBits, EmbedBuilder } = require('discord.js');
-const express = require('express'); // Importa express
+const express = require('express'); 
 const axios = require('axios');
 
-const app = express(); // Crea una aplicación de Express
-const PORT = process.env.PORT || 3000; // Usa el puerto especificado por Render
+const app = express(); 
+const PORT = process.env.PORT || 3000; 
 
 const client = new Client({
     intents: [
@@ -13,6 +13,7 @@ const client = new Client({
     ],
 });
 
+const PREFIX = '!'; // Command prefix
 const roles = ['Duelista', 'Centinela', 'Controlador', 'Iniciador'];
 const mapas = {
     'Ascent': {
@@ -70,13 +71,12 @@ const mapas = {
         'Iniciador': ['Sova', 'Skye', 'Gekko', 'Breach', 'KAY/O', 'Fade']
     }
 };
-const personajes = {}; // Aquí almacenarás los personajes obtenidos de la API
+const personajes = {}; 
 
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-// Función para cargar los agentes de Valorant
 async function loadAgentes() {
     try {
         const response = await axios.get('https://valorant-api.com/v1/agents?language=es-ES');
@@ -84,11 +84,11 @@ async function loadAgentes() {
 
         agentes.forEach(agent => {
             if (agent.isPlayableCharacter) {
-                const role = agent.role.displayName; // El rol ya estará en español
+                const role = agent.role.displayName; 
                 if (!personajes[role]) {
                     personajes[role] = [];
                 }
-                personajes[role].push(agent); // Almacena el objeto del agente completo
+                personajes[role].push(agent); 
             }
         });
 
@@ -109,84 +109,67 @@ async function getMap(mapName) {
         return null; // Handle errors gracefully
     }
 }
+
 client.once('ready', () => {
     console.log(`¡Bot en línea!`);
-    loadAgentes(); // Carga los agentes al iniciar el bot
+    loadAgentes(); 
 });
 
-// Escucha en el puerto definido
 app.listen(PORT, () => {
     console.log(`Servidor escuchando en el puerto ${PORT}`);
 });
 
-
-// Listener para manejar el comando de randomización
 client.on('messageCreate', async message => {
-    if (message.author.bot) return; // Ignora los mensajes de otros bots
+    if (message.author.bot) return; 
     const args = message.content.split(' ');
     const map = args[1];
 
-    if (message.content.startsWith('!randomize') && !map) {
+    if (message.content.startsWith(`${PREFIX}randomize`)) {
         const author = message.author;
-        const username = author.username; // Nombre de usuario
-        const avatarURL = author.displayAvatarURL(); // URL del avatar
+        const username = author.username; 
+        const avatarURL = author.displayAvatarURL(); 
 
-        const randomRole = roles[Math.floor(Math.random() * roles.length)]; // Obtiene un rol aleatorio
-
+        const randomRole = roles[Math.floor(Math.random() * roles.length)]; 
         const randomPersonaje = personajes[randomRole][Math.floor(Math.random() * personajes[randomRole].length)];
 
-        // Crea el embed
         const embed = new EmbedBuilder()
-            .setAuthor({ name: username, iconURL: avatarURL}) // Nombre y avatar del autor
-            .setColor(randomPersonaje.backgroundGradientColors?.[0]?.replace(/ff$/, '') || '#0099ff') // Color del embed, remueve el 'ff' y usa color predeterminado si no hay colores
-            .setTitle(`¡${capitalizeFirstLetter(username)}, tu rol es: ${randomRole}!`) // Usar randomRole aquí
+            .setAuthor({ name: username, iconURL: avatarURL })
+            .setColor(randomPersonaje.backgroundGradientColors?.[0]?.replace(/ff$/, '') || '#0099ff') 
+            .setTitle(`¡${capitalizeFirstLetter(username)}, tu rol es: ${randomRole}!`) 
             .setDescription(`Jugarás con: **${randomPersonaje.displayName}**`)
-            .setThumbnail(randomPersonaje.role.displayIcon) // Icono pequeño del personaje
-            .setImage(randomPersonaje.fullPortrait) // Imagen grande del personaje
+            .setThumbnail(randomPersonaje.role.displayIcon)
+            .setImage(randomPersonaje.fullPortrait) 
             .setTimestamp();
 
         message.channel.send({ embeds: [embed] });
-    }
 
-    if (message.content.startsWith('!randomize') && map) {
-        const author = message.author;
-        const username = author.username; // Nombre de usuario
-        const avatarURL = author.displayAvatarURL(); // URL del avatar
+        if (map) {
+            if (!mapas[map]) {
+                message.channel.send(`El mapa "${map}" no es válido. Por favor, elige uno de los siguientes: ${Object.keys(mapas).join(', ')}`);
+                return;
+            }
 
-        if (!mapas[map]) {
-            message.channel.send(`El mapa "${map}" no es válido. Por favor, elige uno de los siguientes: ${Object.keys(mapas).join(', ')}`);
-            return;
+            const personajesPorMapa = mapas[map][randomRole]; 
+            if (!personajesPorMapa || personajesPorMapa.length === 0) {
+                message.channel.send(`No hay personajes disponibles para el rol "${randomRole}" en el mapa "${map}".`);
+                return;
+            }
+
+            const randomPersonajeMap = personajesPorMapa[Math.floor(Math.random() * personajesPorMapa.length)];
+            const mapImage = await getMap(capitalizeFirstLetter(map)); // Use await here
+
+            const mapEmbed = new EmbedBuilder()
+                .setAuthor({ name: username, iconURL: avatarURL })
+                .setColor(randomPersonajeMap.backgroundGradientColors?.[0]?.replace(/ff$/, '') || '#0099ff')
+                .setTitle(`¡${capitalizeFirstLetter(username)}, tu rol es: ${randomRole}!`)
+                .setDescription(`Jugarás con: **${randomPersonajeMap.displayName}**`)
+                .setThumbnail(randomPersonajeMap.displayIcon)
+                .setImage(mapImage || 'default_image_url_here') // Handle null map image
+                .setTimestamp();
+
+            message.channel.send({ embeds: [mapEmbed] });
         }
-
-        const randomRole = roles[Math.floor(Math.random() * roles.length)]; // Obtiene un rol aleatorio
-        const personajesPorMapa = mapas[map][randomRole]; // Obtiene los personajes del rol para el mapa especificado
-
-        if (!personajesPorMapa || personajesPorMapa.length === 0) {
-            message.channel.send(`No hay personajes disponibles para el rol "${randomRole}" en el mapa "${map}".`);
-            return;
-        }
-
-        if (!personajesPorMapa || personajesPorMapa.length === 0) {
-            message.channel.send(`No hay personajes disponibles para el rol "${randomRole}" en el mapa "${map}".`);
-            return;
-        }
-
-        const randomPersonaje = personajesPorMapa[Math.floor(Math.random() * personajesPorMapa.length)]; // Obtiene un personaje aleatorio del rol y mapa
-        const mapImage = await getMap(capitalizeFirstLetter(map)) // URL de la imagen del mapa
-
-        // Crea el embed
-        const embed = new EmbedBuilder()
-            .setAuthor({ name: username, iconURL: avatarURL}) // Nombre y avatar del autor
-            .setColor(randomPersonaje.backgroundGradientColors?.[0]?.replace(/ff$/, '') || '#0099ff') // Color del embed, remueve el 'ff' y usa color predeterminado si no hay colores
-            .setTitle(`¡${capitalizeFirstLetter(username)}, tu rol es: ${randomRole}!`) // Usar randomRole aquí
-            .setDescription(`Jugarás con: **${randomPersonaje.displayName}**`)
-            .setThumbnail(randomPersonaje.displayIcon) // Icono pequeño del personaje
-            .setImage(mapImage) // Imagen grande del personaje
-            .setTimestamp();
-
-        message.channel.send({ embeds: [embed] });
     }
 });
 
-// Inicia el bot con tu token
 client.login(process.env.BOT_TOKEN);
