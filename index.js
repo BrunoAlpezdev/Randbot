@@ -40,7 +40,7 @@ client.on('messageCreate', message => {
         // Verificar si el rol está definido en personajes
         if (personajes[randomRole]) {
             const randomPersonaje = personajes[randomRole][Math.floor(Math.random() * personajes[randomRole].length)];
-            message.channel.send(`Personaje aleatorio para ${randomRole}: ${randomPersonaje}`);
+            message.channel.send(`${name}. Tu Rol es: ${randomRole}. Jugarás con:${randomPersonaje}`);
         } else {
             message.channel.send(`El rol '${randomRole}' no está definido.`);
             console.error(`El rol '${randomRole}' no está definido en personajes.`);
