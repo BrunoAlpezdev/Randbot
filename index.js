@@ -69,4 +69,4 @@ client.on('messageCreate', async message => {
 });
 
 // Inicia el bot con tu token
-client.login('TU_TOKEN_AQUÍ');
+client.login(process.env.BOT_TOKEN);
