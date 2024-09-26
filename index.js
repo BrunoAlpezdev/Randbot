@@ -12,6 +12,10 @@ const client = new Client({
 const roles = ['Duelista', 'Centinela', 'Controlador', 'Iniciador'];
 const personajes = {}; // Aquí almacenarás los personajes obtenidos de la API
 
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 // Función para cargar los agentes de Valorant
 async function loadAgentes() {
     try {
@@ -57,7 +61,7 @@ client.on('messageCreate', async message => {
         const embed = new EmbedBuilder()
             .setAuthor({ name: username, iconURL: avatarURL}) // Nombre y avatar del autor
             .setColor(randomPersonaje.backgroundGradientColors?.[0]?.replace(/ff$/, '') || '#0099ff') // Color del embed, remueve el 'ff' y usa color predeterminado si no hay colores
-            .setTitle(`¡${name}, tu rol es: ${randomRole}!`) // Usar randomRole aquí
+            .setTitle(`¡${capitalizeFirstLetter(username)}, tu rol es: ${randomRole}!`) // Usar randomRole aquí
             .setDescription(`Jugarás con: **${randomPersonaje.displayName}**`)
             .setThumbnail(randomPersonaje.role.displayIcon) // Icono pequeño del personaje
             .setImage(randomPersonaje.fullPortrait) // Imagen grande del personaje
