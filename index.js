@@ -45,7 +45,7 @@ client.on('messageCreate', async message => {
         return;
     }
 
-    if (message.content.startsWith(`${PREFIX}help`)) {
+    if (message.content.startsWith(`${PREFIX}randhelp`)) {
         const embed = new EmbedBuilder()
             .setColor('#0099ff')
             .setTitle('¡Comandos disponibles!')
