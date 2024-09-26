@@ -1,10 +1,9 @@
 // Release 1.0
-const { capitalizeFirstLetter, loadAgentes, getMap } = require('./methods.js');
+const { personajes, capitalizeFirstLetter, loadAgentes, getMap } = require('./methods.js');
 const { Client, GatewayIntentBits, EmbedBuilder } = require('discord.js');
 const { PREFIX, roles, mapas } = require('./data.js');
 const PORT = process.env.PORT || 3000; 
 const express = require('express'); 
-const personajes = {}; 
 const app = express(); 
 
 const client = new Client({
