@@ -44,17 +44,10 @@ client.on('messageCreate', async message => {
     if (message.author.bot) return; // Ignora los mensajes de otros bots
 
     if (message.content.startsWith('!randomize')) {
-        const args = message.content.split(' ');
-        const name = args[1];
         const author = message.author;
         const username = author.username; // Nombre de usuario
         const userId = author.id; // ID de usuario
-        const avatarURL = author.displayAvatarURL();
-        
-        if (!name) {
-            message.channel.send('Por favor, especifica un nombre. Ejemplo: `!randomize [nombre]`');
-            return;
-        }
+        const avatarURL = author.displayAvatarURL(); // URL del avatar
 
         const randomRole = roles[Math.floor(Math.random() * roles.length)];
 
