@@ -43,6 +43,7 @@ client.on('messageCreate', message => {
             message.channel.send(`${name}. Tu Rol es: ${randomRole}. Jugarás con:${randomPersonaje}`);
         } else {
             message.channel.send(`El rol '${randomRole}' no está definido.`);
+            
             console.error(`El rol '${randomRole}' no está definido en personajes.`);
         }
     }
