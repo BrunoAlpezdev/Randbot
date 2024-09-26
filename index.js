@@ -28,7 +28,7 @@ async function loadAgentes() {
             }
         });
 
-        console.log('Agentes cargados:', personajes);
+        console.log('Agentes cargados:', Object.keys(personajes).length);
     } catch (error) {
         console.error('Error al obtener los agentes:', error);
     }
@@ -46,22 +46,28 @@ client.on('messageCreate', async message => {
     if (message.content.startsWith('!randomize')) {
         const args = message.content.split(' ');
         const name = args[1];
-        const randomRole = roles[Math.floor(Math.random() * roles.length)];
-
+        
         if (!name) {
             message.channel.send('Por favor, especifica un nombre. Ejemplo: `!randomize [nombre]`');
             return;
         }
 
-        // Verificar si el rol está definido en personajes
+        const randomRole = roles[Math.floor(Math.random() * roles.length)];
+
+        // Verificar si hay personajes disponibles para el rol
+        if (!personajes[randomRole] || personajes[randomRole].length === 0) {
+            message.channel.send(`No hay personajes disponibles para el rol: ${randomRole}`);
+            return;
+        }
+
         const randomPersonaje = personajes[randomRole][Math.floor(Math.random() * personajes[randomRole].length)];
 
         // Crea el embed
         const embed = new EmbedBuilder()
-            .setColor(randomPersonaje.backgroundGradientColors[0]) // Color del embed
-            .setTitle(`¡${name}, te tocó: ${randomRole}!`)
-            .setDescription(`Jugarás con: ${randomPersonaje.displayName}`)
-            .setThumbnail(randomPersonaje.role.displayIcon) // Thumbnail del ícono
+            .setColor(randomPersonaje.backgroundGradientColors?.[0] || '#0099ff') // Color del embed, color predeterminado si no hay colores
+            .setTitle(`¡${name}, tu rol es: ${randomRole}!`) // Usar randomRole aquí
+            .setDescription(`Jugarás con: **${randomPersonaje.displayName}**\n\n${randomPersonaje.description}`)
+            .setThumbnail(randomPersonaje.displayIcon) // Icono pequeño del personaje
             .setImage(randomPersonaje.fullPortrait) // Imagen grande del personaje
             .setTimestamp();
 
