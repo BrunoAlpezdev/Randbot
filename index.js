@@ -17,30 +17,34 @@ const personajes = [{duelista: ['Jett', 'Raze', 'Phoenix', 'Yoru', 'Reyna', 'Iso
 
 client.once('ready', () => {
     console.log('¡Bot en línea!');
+    
 });
 
-client.on('messageCreate', (message) => {
+client.on('messageCreate', message => {
     if (message.author.bot) return; // Ignora los mensajes de otros bots
 
-    // Verifica si el mensaje comienza con !randomize
+    
+
     if (message.content.startsWith('!randomize')) {
         const args = message.content.split(' ');
         const name = args[1];
+        const randomRole = args[1];
 
         if (!name) {
             message.channel.send('Por favor, especifica un nombre. Ejemplo: `!randomize [nombre]`');
             return;
         }
 
-        // Selecciona un rol aleatorio de la lista de roles
-        const randomRole = roles[Math.floor(Math.random() * roles.length)];
-
-        // Selecciona un personaje aleatorio basado en el rol
-        const randomPersonaje = personajes[randomRole][Math.floor(Math.random() * personajes[randomRole].length)];
-
-        // Envía el rol y personaje aleatorio asignado al nombre
-        message.channel.send(`${name} ha sido asignado como: ${randomRole}, con el personaje: ${randomPersonaje}`);
+        // Verificar si el rol está definido en personajes
+        if (personajes[randomRole]) {
+            const randomPersonaje = personajes[randomRole][Math.floor(Math.random() * personajes[randomRole].length)];
+            message.channel.send(`Personaje aleatorio para ${randomRole}: ${randomPersonaje}`);
+        } else {
+            message.channel.send(`El rol '${randomRole}' no está definido.`);
+            console.error(`El rol '${randomRole}' no está definido en personajes.`);
+        }
     }
 });
+
 
 client.login(process.env.BOT_TOKEN);
