@@ -26,8 +26,11 @@ app.listen(PORT, () => {
 client.on('messageCreate', async message => {
     if (message.author.bot) return; 
     const args = message.content.split(' ');
-    const map = capitalizeFirstLetter(args[1]);
-    const rol = capitalizeFirstLetter(args[2]);
+    const arg1 = args[1];
+    const arg2 = args[2];
+
+    const map = capitalizeFirstLetter(String(arg1));
+    const rol = capitalizeFirstLetter(String(arg2));
 
     console.log('Comando recibido:', message.content);
     console.log('Mapa:', map);
@@ -123,7 +126,7 @@ client.on('messageCreate', async message => {
                     message.channel.send(`No hay personajes disponibles para el rol "${rol}" en el mapa "${map}".`);
                     return;
                 }
-
+                
                 const randomPersonajeMapaRol = personajesPorMapaRol[Math.floor(Math.random() * personajesPorMapaRol.length)];
                 console.log(randomPersonajeMapaRol);
 
