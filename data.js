@@ -59,10 +59,16 @@ const mapas = {
     'Sunset': {
         'Duelista': ['Jett', 'Reyna', 'Neon', 'Phoenix', 'Raze', 'Iso'],
         'Centinela': ['Cypher', 'Chamber'],
-        'Controlador': ['Viper', 'Astra', 'Harbor', 'Omen', 'Clove'],
+        'Controlador': ['Astra', 'Harbor', 'Omen', 'Clove'],
         'Iniciador': ['Sova', 'Gekko', 'KAY/O', 'Fade', 'Breach']
+    },
+    'Abyss': {
+        'Duelista': ['Jett', 'Reyna', 'Neon', 'Iso'],
+        'Centinela': ['Cypher', 'Deadlock'],
+        'Controlador': ['Astra', 'Harbor', 'Omen', 'Clove'],
+        'Iniciador': ['Sova', 'Gekko', 'Breach']
     }
-};
+    };
 
 module.exports = {
     PREFIX,
