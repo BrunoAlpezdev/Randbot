@@ -134,7 +134,7 @@ client.on('messageCreate', async message => {
                 const rolEmbed = new EmbedBuilder()
                     .setAuthor({ name: username, iconURL: avatarURL })
                     .setColor(PersonajeMapaRol.backgroundGradientColors?.[0]?.replace(/ff$/, '') || '#0099ff')
-                    .setTitle(`¡${capitalizeFirstLetter(username)}, elegiste el rol: ${rol}!`)
+                    .setTitle(`¡${capitalizeFirstLetter(username)}, elegiste el rol: ${capitalizeFirstLetter(rol)}!`)
                     .setDescription(`Jugarás con: **${PersonajeMapaRol.displayName}**`)
                     .setThumbnail(PersonajeMapaRol.displayIcon)
                     .setImage(mapImage || 'default_image_url_here')
