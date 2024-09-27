@@ -55,6 +55,12 @@ const mapas = {
         'Centinela': ['Cypher', 'Killjoy', 'Chamber', 'Sage', 'Deadlock'],
         'Controlador': ['Viper', 'Astra', 'Harbor', 'Omen'],
         'Iniciador': ['Sova', 'Skye', 'Gekko', 'KAY/O', 'Fade']
+    },
+    'Sunset': {
+        'Duelista': ['Jett', 'Reyna', 'Neon', 'Phoenix', 'Raze', 'Iso'],
+        'Centinela': ['Cypher', 'Chamber'],
+        'Controlador': ['Viper', 'Astra', 'Harbor', 'Omen', 'Clove'],
+        'Iniciador': ['Sova', 'Gekko', 'KAY/O', 'Fade', 'Breach']
     }
 };
 
