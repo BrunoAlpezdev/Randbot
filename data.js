@@ -1,4 +1,4 @@
-// Release 1.1
+// Release 2.0
 const PREFIX = '!';
 const roles = ['Duelista', 'Centinela', 'Controlador', 'Iniciador'];
 const mapas = {

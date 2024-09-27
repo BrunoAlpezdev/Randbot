@@ -1,4 +1,4 @@
-# Randbot
+# Randbot 2.0
 
 Randbot es un bot de discord creado para elegir por ti, un agente en Valorant, ademas de poder elegir según el mapa deseado
 
@@ -24,24 +24,35 @@ para un agente y un rol aleatorio según el mapa
 ## Instalación
 
 1. Clona el repositorio:
+
     ```bash
+
     git clone https://github.com/tu_usuario/randbot.git
     ```
+
 2. Navega al directorio del proyecto:
+
     ```bash
+
     cd randbot
     ```
+
 3. Instala las dependencias:
+
     ```bash
+
     pnpm install
     ```
 
 ## Uso
 
 1. Ejecuta el script principal:
+
     ```bash
+
     node main.js
     ```
+
 2. Sigue las instrucciones en pantalla para interactuar con Randbot.
 
 ## Dependencias
@@ -68,4 +79,4 @@ Este proyecto está licenciado bajo la Licencia MIT. Consulta el archivo `LICENS
 
 ## Contacto
 
-Para preguntas o soporte, por favor abre un issue en el repositorio o contacta a [brunoalpezdev@gmail.com](mailto:brunoalpezdev@gmail.com)
+Para preguntas o soporte, por favor abre un issue en el repositorio o contacta a [brunoalpezdev@gmail.com](mailto:brunoalpezdev@gmail.com).

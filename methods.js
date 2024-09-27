@@ -1,4 +1,4 @@
-// Release 1.1
+// Release 2.0
 const axios = require('axios');
 
 const personajes = {}; 
