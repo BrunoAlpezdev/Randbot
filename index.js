@@ -119,7 +119,12 @@ client.on('messageCreate', async message => {
                 const personajesPorMapaRol = mapas[map][rol]; 
                 console.log(`Personajes para el mapa: ${map}: `, personajesPorMapaRol);
                 
-                const randomPersonajeMapaRol = personajesPorMapaRol.find[Math.floor(Math.random() * personajesPorMapaRol.length)];
+                if (!personajesPorMapaRol || personajesPorMapaRol.length === 0) {
+                    message.channel.send(`No hay personajes disponibles para el rol "${rol}" en el mapa "${map}".`);
+                    return;
+                }
+                
+                const randomPersonajeMapaRol = personajesPorMapaRol[Math.floor(Math.random() * personajesPorMapaRol.length)];
                 console.log(randomPersonajeMapaRol);
 
                 const PersonajeMapaRol = personajes[rol].find(agent => agent.displayName === randomPersonajeMapaRol);
