@@ -29,8 +29,16 @@ client.on('messageCreate', async message => {
     const arg1 = args[1];
     const arg2 = args[2];
 
-    const map = capitalizeFirstLetter(String(arg1));
-    const rol = capitalizeFirstLetter(String(arg2));
+    let map = null
+    let rol = null
+
+    if (!arg1) {
+        map = capitalizeFirstLetter(String(arg1));
+    };
+
+    if (!arg2) {
+        rol = capitalizeFirstLetter(String(arg2));
+    }
 
     console.log('Comando recibido:', message.content);
     console.log('Mapa:', map);
