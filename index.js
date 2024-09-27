@@ -91,35 +91,6 @@ client.on('messageCreate', async message => {
             return;
         }
 
-        if (rol) {
-            if (!roles.includes(rol)) {
-                message.channel.send(`El rol "${rol}" no es válido. Por favor, elige uno de los siguientes: ${roles.join(', ')}`);
-                return;
-            }
-
-            const personajesPorRol = personajes[rol];
-            if (!personajesPorRol || personajesPorRol.length === 0) {
-                message.channel.send(`No hay personajes disponibles para el rol "${rol}".`);
-                return;
-            }
-            
-            const personajesPorMapa = mapas[map][rol]; 
-            const randomPersonajeRol = personajesPorMapa.find(agent => agent.displayName === randomPersonajeMapName);
-            const mapImage = await getMap(capitalizeFirstLetter(map))
-
-            const rolEmbed = new EmbedBuilder()
-                .setAuthor({ name: username, iconURL: avatarURL })
-                .setColor(randomPersonajeRol.backgroundGradientColors?.[0]?.replace(/ff$/, '') || '#0099ff')
-                .setTitle(`¡${capitalizeFirstLetter(username)}, elegiste el rol: ${rol}!`)
-                .setDescription(`Jugarás con: **${randomPersonajeRol.displayName}**`)
-                .setThumbnail(randomPersonajeRol.displayIcon)
-                .setImage(mapImage || 'default_image_url_here')
-                .setTimestamp();
-
-            message.channel.send({ embeds: [rolEmbed] });
-            return;
-        }
-
         if (map) {
             if (!mapas[map]) {
                 message.channel.send(`El mapa "${map}" no es válido. Por favor, elige uno de los siguientes: ${Object.keys(mapas).join(', ')}`);
@@ -130,6 +101,37 @@ client.on('messageCreate', async message => {
 
             if (!personajesPorMapa || personajesPorMapa.length === 0) {
                 message.channel.send(`No hay personajes disponibles para el rol "${randomRole}" en el mapa "${map}".`);
+                return;
+            }
+
+            if (rol) {
+                if (!roles.includes(rol)) {
+                    message.channel.send(`El rol "${rol}" no es válido. Por favor, elige uno de los siguientes: ${roles.join(', ')}`);
+                    return;
+                }
+    
+                const personajesPorRol = personajes[rol];
+                if (!personajesPorRol || personajesPorRol.length === 0) {
+                    message.channel.send(`No hay personajes disponibles para el rol "${rol}".`);
+                    return;
+                }
+                
+                const personajesPorMapaRol = mapas[map][rol]; 
+                console.log(`Personajes para el mapa: ${map}: `, personajesPorMapaRol);
+                
+                const randomPersonajeRol = personajesPorMapaRol.find[Math.floor(Math.random() * personajesPorMapaRol.length)];
+                const mapImage = await getMap(capitalizeFirstLetter(map))
+    
+                const rolEmbed = new EmbedBuilder()
+                    .setAuthor({ name: username, iconURL: avatarURL })
+                    .setColor(randomPersonajeRol.backgroundGradientColors?.[0]?.replace(/ff$/, '') || '#0099ff')
+                    .setTitle(`¡${capitalizeFirstLetter(username)}, elegiste el rol: ${rol}!`)
+                    .setDescription(`Jugarás con: **${randomPersonajeRol.displayName}**`)
+                    .setThumbnail(randomPersonajeRol.displayIcon)
+                    .setImage(mapImage || 'default_image_url_here')
+                    .setTimestamp();
+    
+                message.channel.send({ embeds: [rolEmbed] });
                 return;
             }
 
