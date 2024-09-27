@@ -3,10 +3,10 @@ const PREFIX = '!';
 const roles = ['Duelista', 'Centinela', 'Controlador', 'Iniciador'];
 const mapas = {
     'Ascent': {
-        'Duelista': ['Jett', 'Reyna', 'Phoenix'],
-        'Centinela': ['Cypher', 'Killjoy'],
-        'Controlador': ['Omen', 'Brimstone'],
-        'Iniciador': ['Sova', 'KAY/O', 'Gekko']
+        'Duelista': ['Jett', 'Reyna', 'Phoenix', 'Iso', 'Neon', 'Raze'],
+        'Centinela': ['Cypher', 'Killjoy', 'Vyse', 'Chamber', 'Deadlock'],
+        'Controlador': ['Omen', 'Brimstone', 'Astra'],
+        'Iniciador': ['Sova', 'KAY/O', 'Gekko', 'Fade']
     },
     'Bind': {
         'Duelista': ['Raze', 'Reyna', 'Iso', 'Jett', 'Yoru'],
@@ -17,11 +17,11 @@ const mapas = {
     'Haven': {
         'Duelista': ['Jett', 'Phoenix', 'Reyna', 'Neon'],
         'Centinela': ['Cypher', 'Killjoy', 'Chamber'],
-        'Controlador': ['Omen', 'Brimstone', 'Clove'],
+        'Controlador': ['Omen', 'Brimstone', 'Clove', 'Astra'],
         'Iniciador': ['Sova', 'Breach', 'Skye', 'Gekko']
     },
     'Icebox': {
-        'Duelista': ['Jett', 'Reyna', 'Yoru', 'Iso'],
+        'Duelista': ['Jett', 'Reyna', 'Yoru', 'Iso', 'Neon'],
         'Centinela': ['Sage', 'Killjoy', 'Deadlock', 'Chamber'],
         'Controlador': ['Viper', 'Harbor'],
         'Iniciador': ['Sova', 'KAY/O', 'Gekko']
@@ -33,28 +33,28 @@ const mapas = {
         'Iniciador': ['Breach', 'Skye', 'KAY/O', 'Gekko']
     },
     'Breeze': {
-        'Duelista': ['Jett', 'Reyna', 'Yoru', 'Iso'],
-        'Centinela': ['Cypher', 'Killjoy', 'Chamber'],
-        'Controlador': ['Viper', 'Astra', 'Harbor'],
+        'Duelista': ['Jett', 'Reyna', 'Yoru', 'Iso', 'Neon'],
+        'Centinela': ['Cypher', 'Chamber'],
+        'Controlador': ['Viper', 'Harbor'],
         'Iniciador': ['Sova', 'Skye', 'KAY/O', 'Gekko']
     },
     'Fracture': {
         'Duelista': ['Raze', 'Reyna', 'Iso', 'Jett', 'Neon'],
         'Centinela': ['Cypher', 'Killjoy', 'Chamber'],
-        'Controlador': ['Brimstone', 'Astra', 'Clove', 'Viper', 'Harbor'],
+        'Controlador': ['Brimstone', 'Astra', 'Viper', 'Harbor'],
         'Iniciador': ['Breach', 'Skye', 'Fade', 'Gekko']
     },
     'Lotus': {
         'Duelista': ['Jett', 'Raze', 'Iso', 'Reyna', 'Neon'],
         'Centinela': ['Cypher', 'Killjoy', 'Sage', 'Chamber'],
-        'Controlador': ['Omen', 'Brimstone'],
-        'Iniciador': ['Sova', 'Breach', 'Gekko']
+        'Controlador': ['Omen', 'Brimstone', 'Harbor'],
+        'Iniciador': ['Sova', 'Breach', 'Gekko', 'Fade']
     },
     'Pearl': {
-        'Duelista': ['Jett', 'Reyna', 'Neon', 'Phoenix'],
-        'Centinela': ['Cypher', 'Killjoy', 'Chamber', 'Sage'],
-        'Controlador': ['Viper', 'Astra', 'Harbor'],
-        'Iniciador': ['Sova', 'Skye', 'Gekko', 'Breach', 'KAY/O', 'Fade']
+        'Duelista': ['Jett', 'Reyna', 'Neon', 'Phoenix', 'Raze', 'Iso'],
+        'Centinela': ['Cypher', 'Killjoy', 'Chamber', 'Sage', 'Deadlock'],
+        'Controlador': ['Viper', 'Astra', 'Harbor', 'Omen'],
+        'Iniciador': ['Sova', 'Skye', 'Gekko', 'KAY/O', 'Fade']
     }
 };
 
