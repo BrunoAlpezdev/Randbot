@@ -26,19 +26,8 @@ app.listen(PORT, () => {
 client.on('messageCreate', async message => {
     if (message.author.bot) return; 
     const args = message.content.split(' ');
-    const arg1 = args[1];
-    const arg2 = args[2];
-
-    let map = null
-    let rol = null
-
-    if (!arg1) {
-        map = capitalizeFirstLetter(String(arg1));
-    };
-
-    if (!arg2) {
-        rol = capitalizeFirstLetter(String(arg2));
-    }
+    let map = args[1];
+    let rol = args[2];
 
     console.log('Comando recibido:', message.content);
     console.log('Mapa:', map);
@@ -103,12 +92,12 @@ client.on('messageCreate', async message => {
         }
 
         if (map) {
-            if (!mapas[map]) {
+            if (!mapas[capitalizeFirstLetter(map)]) {
                 message.channel.send(`El mapa "${map}" no es válido. Por favor, elige uno de los siguientes: ${Object.keys(mapas).join(', ')}`);
                 return;
             }
 
-            const personajesPorMapa = mapas[map][randomRole]; 
+            const personajesPorMapa = mapas[capitalizeFirstLetter(map)][randomRole]; 
 
             if (!personajesPorMapa || personajesPorMapa.length === 0) {
                 message.channel.send(`No hay personajes disponibles para el rol "${randomRole}" en el mapa "${map}".`);
@@ -116,18 +105,18 @@ client.on('messageCreate', async message => {
             }
 
             if (rol) {
-                if (!roles.includes(rol)) {
+                if (!roles.includes(capitalizeFirstLetter(rol))) {
                     message.channel.send(`El rol "${rol}" no es válido. Por favor, elige uno de los siguientes: ${roles.join(', ')}`);
                     return;
                 }
     
-                const personajesPorRol = personajes[rol];
+                const personajesPorRol = personajes[capitalizeFirstLetter(rol)];
                 if (!personajesPorRol || personajesPorRol.length === 0) {
                     message.channel.send(`No hay personajes disponibles para el rol "${rol}".`);
                     return;
                 }
                 
-                const personajesPorMapaRol = mapas[map][rol]; 
+                const personajesPorMapaRol = mapas[capitalizeFirstLetter(map)][capitalizeFirstLetter(rol)]; 
                 console.log(`Personajes para el mapa: ${map}: `, personajesPorMapaRol);
                 
                 if (!personajesPorMapaRol || personajesPorMapaRol.length === 0) {
@@ -138,7 +127,7 @@ client.on('messageCreate', async message => {
                 const randomPersonajeMapaRol = personajesPorMapaRol[Math.floor(Math.random() * personajesPorMapaRol.length)];
                 console.log(randomPersonajeMapaRol);
 
-                const PersonajeMapaRol = personajes[rol].find(agent => agent.displayName === randomPersonajeMapaRol);
+                const PersonajeMapaRol = personajes[capitalizeFirstLetter(rol)].find(agent => agent.displayName === randomPersonajeMapaRol);
                 
                 const mapImage = await getMap(capitalizeFirstLetter(map))
     
