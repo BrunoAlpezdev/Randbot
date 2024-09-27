@@ -45,7 +45,7 @@ client.on('messageCreate', async message => {
         return;
     }
 
-    if (message.content.startsWith(`${PREFIX}randhelp`)) {
+    if (message.content.startsWith(`${PREFIX}randhelp`) || message.content.startsWith(`${PREFIX}rhelp`)) {
         const embed = new EmbedBuilder()
             .setColor('#0099ff')
             .setTitle('¡Comandos disponibles!')
@@ -94,6 +94,7 @@ client.on('messageCreate', async message => {
             }
 
             const personajesPorMapa = mapas[map][randomRole]; 
+
             if (!personajesPorMapa || personajesPorMapa.length === 0) {
                 message.channel.send(`No hay personajes disponibles para el rol "${randomRole}" en el mapa "${map}".`);
                 return;
@@ -110,15 +111,18 @@ client.on('messageCreate', async message => {
                     message.channel.send(`No hay personajes disponibles para el rol "${rol}".`);
                     return;
                 }
-    
-                const randomPersonajeRol = personajesPorRol[Math.floor(Math.random() * personajesPorRol.length)];
+                
+                const personajesPorMapa = mapas[map][rol]; 
+                const randomPersonajeMap = personajesPorMapa.find(agent => agent.displayName === randomPersonajeMapName);
+                const mapImage = await getMap(capitalizeFirstLetter(map))
+
                 const rolEmbed = new EmbedBuilder()
                     .setAuthor({ name: username, iconURL: avatarURL })
                     .setColor(randomPersonajeRol.backgroundGradientColors?.[0]?.replace(/ff$/, '') || '#0099ff')
                     .setTitle(`¡${capitalizeFirstLetter(username)}, elegiste el rol: ${rol}!`)
                     .setDescription(`Jugarás con: **${randomPersonajeRol.displayName}**`)
-                    .setThumbnail(randomPersonajeRol.displayIcon)
-                    .setImage(randomPersonajeRol.fullPortrait)
+                    .setThumbnail(randomPersonajeMap.displayIcon)
+                    .setImage(mapImage || 'default_image_url_here')
                     .setTimestamp();
     
                 message.channel.send({ embeds: [rolEmbed] });
