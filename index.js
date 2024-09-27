@@ -119,15 +119,19 @@ client.on('messageCreate', async message => {
                 const personajesPorMapaRol = mapas[map][rol]; 
                 console.log(`Personajes para el mapa: ${map}: `, personajesPorMapaRol);
                 
-                const randomPersonajeRol = personajesPorMapaRol.find[Math.floor(Math.random() * personajesPorMapaRol.length)];
+                const randomPersonajeMapaRol = personajesPorMapaRol.find[Math.floor(Math.random() * personajesPorMapaRol.length)];
+                console.log(randomPersonajeMapaRol);
+
+                const PersonajeMapaRol = personajes[rol].find(agent => agent.displayName === randomPersonajeMapaRol);
+                
                 const mapImage = await getMap(capitalizeFirstLetter(map))
     
                 const rolEmbed = new EmbedBuilder()
                     .setAuthor({ name: username, iconURL: avatarURL })
-                    .setColor(randomPersonajeRol.backgroundGradientColors?.[0]?.replace(/ff$/, '') || '#0099ff')
+                    .setColor(PersonajeMapaRol.backgroundGradientColors?.[0]?.replace(/ff$/, '') || '#0099ff')
                     .setTitle(`¡${capitalizeFirstLetter(username)}, elegiste el rol: ${rol}!`)
-                    .setDescription(`Jugarás con: **${randomPersonajeRol.displayName}**`)
-                    .setThumbnail(randomPersonajeRol.displayIcon)
+                    .setDescription(`Jugarás con: **${PersonajeMapaRol.displayName}**`)
+                    .setThumbnail(PersonajeMapaRol.displayIcon)
                     .setImage(mapImage || 'default_image_url_here')
                     .setTimestamp();
     
