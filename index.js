@@ -1,7 +1,7 @@
 // Release 2.0
 const { personajes, capitalizeFirstLetter, loadAgentes, getMap } = require('./methods.js');
 const { Client, GatewayIntentBits, EmbedBuilder } = require('discord.js');
-const { PREFIX, roles, mapas } = require('./data.js');
+const { PREFIX, roles, mapas, rolesMap } = require('./data.js');
 const PORT = process.env.PORT || 3000; 
 const express = require('express'); 
 const app = express(); 
@@ -32,6 +32,12 @@ client.on('messageCreate', async message => {
     console.log('Comando recibido:', message.content);
     console.log('Mapa:', map);
     console.log('Rol:', rol);
+
+    if (message.content.startsWith(`${PREFIX}servidores`)) {
+        const guilds = client.guilds.cache.map(guild => guild.name).join('\n');
+        message.channel.send(`Estoy en los siguientes servidores:\n${guilds}`);
+        return;
+    }
 
     if (message.content.startsWith(`${PREFIX}roles`)) {
         message.channel.send(`Roles disponibles: ${roles.join(', ')}`);
@@ -105,10 +111,8 @@ client.on('messageCreate', async message => {
             }
 
             if (rol) {
-                if (!roles.includes(capitalizeFirstLetter(rol))) {
-                    message.channel.send(`El rol "${rol}" no es válido. Por favor, elige uno de los siguientes: ${roles.join(', ')}`);
-                    return;
-                }
+                const capitalizedRol = capitalizeFirstLetter(rol);
+                rol = rolesMap[capitalizedRol] || rol;
     
                 const personajesPorRol = personajes[capitalizeFirstLetter(rol)];
                 if (!personajesPorRol || personajesPorRol.length === 0) {

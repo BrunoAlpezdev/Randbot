@@ -70,8 +70,29 @@ const mapas = {
     }
     };
 
+const rolesMap = {
+    'D': 'Duelista',
+    'Du': 'Duelista',
+    'Due': 'Duelista',
+    'Duel': 'Duelista',
+    'C': 'Centinela',
+    'Ce': 'Centinela',
+    'Cen': 'Centinela',
+    'Cent': 'Centinela',
+    'Con': 'Controlador',
+    'S': 'Controlador',
+    'Sm': 'Controlador',
+    'Smo': 'Controlador',
+    'Smoke': 'Controlador',
+    'Smoker': 'Controlador',
+    'I': 'Iniciador',
+    'In': 'Iniciador',
+    'Ini': 'Iniciador'
+};
+
 module.exports = {
     PREFIX,
     roles,
-    mapas
+    mapas,
+    rolesMap
 };
