@@ -176,6 +176,8 @@ client.on('messageCreate', async message => {
             
         }
             
+        } else {
+            message.channel.send(`Por favor, configura este canal para usar el bot. Usa el comando \`!channel here\` en el canal donde deseas usar el bot. el canal configurado actualmente es: ${targetChannelId ? `<#${targetChannelId}>` : 'ninguno'}`);
         }
     });
     
