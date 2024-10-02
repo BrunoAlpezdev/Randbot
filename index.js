@@ -17,8 +17,7 @@ const client = new Client({
 let targetChannelId = null;
 
 client.once('ready', () => {
-    console.log(`¡Bot en línea!`);
-    message.channel.send('Bon en línea. Versión 2.5.3');
+    console.log(`¡Bot en línea. Versión 2.5.4!`);
     loadAgentes(); 
 });
 
@@ -42,17 +41,6 @@ client.on('messageCreate', async message => {
     }
 
     if (targetChannelId && message.channel.id === targetChannelId) {
-        
-        if (message.content.startsWith(`${PREFIX}changePrefix`)) {
-            const newPrefix = args[1];
-            if (newPrefix && newPrefix.length > 0) {
-                PREFIX = newPrefix;
-                message.channel.send(`Prefijo cambiado a: ${newPrefix}`);
-            } else {
-                message.channel.send('Por favor, proporciona un nuevo prefijo.');
-            }
-            return;
-        }
         
         if (message.content.startsWith(`${PREFIX}servidores`)) {
             const guilds = client.guilds.cache.map(guild => guild.name).
