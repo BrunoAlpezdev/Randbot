@@ -18,6 +18,7 @@ let targetChannelId = null;
 
 client.once('ready', () => {
     console.log(`¡Bot en línea!`);
+    message.channel.send('Bon en línea. Versión 2.5.3');
     loadAgentes(); 
 });
 
