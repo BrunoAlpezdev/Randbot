@@ -1,5 +1,5 @@
 // Release 2.0
-const PREFIX = '!';
+let PREFIX = '!';
 const roles = ['Duelista', 'Centinela', 'Controlador', 'Iniciador'];
 const mapas = {
     'Ascent': {

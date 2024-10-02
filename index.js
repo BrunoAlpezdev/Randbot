@@ -35,13 +35,23 @@ client.on('messageCreate', async message => {
     console.log('Mapa:', map);
     console.log('Rol:', rol);
 
-    if (message.content === '!channel here') {
+    if (message.content === `${PREFIX}channel here`) {
         targetChannelId = message.channel.id;
         message.channel.send('Este canal ha sido configurado.');
     }
 
     if (targetChannelId && message.channel.id === targetChannelId) {
         
+        if (message.content.startsWith(`${PREFIX}changePrefix`)) {
+            const newPrefix = args[1];
+            if (newPrefix && newPrefix.length > 0) {
+                PREFIX = newPrefix;
+                message.channel.send(`Prefijo cambiado a: ${newPrefix}`);
+            } else {
+                message.channel.send('Por favor, proporciona un nuevo prefijo.');
+            }
+            return;
+        }
         
         if (message.content.startsWith(`${PREFIX}servidores`)) {
             const guilds = client.guilds.cache.map(guild => guild.name).
@@ -177,7 +187,9 @@ client.on('messageCreate', async message => {
         }
             
         } else {
-            message.channel.send(`Por favor, configura este canal para usar el bot. Usa el comando \`!channel here\` en el canal donde deseas usar el bot. el canal configurado actualmente es: ${targetChannelId ? `<#${targetChannelId}>` : 'ninguno'}`);
+            if (message.content.startsWith(`${PREFIX}`)) {
+                message.channel.send(`Por favor, configura este canal para usar el bot. Usa el comando \`${PREFIX}channel here\` en el canal donde deseas usar el bot. el canal configurado actualmente es: ${targetChannelId ? `<#${targetChannelId}>` : 'ninguno'}`);
+            }
         }
     });
     
