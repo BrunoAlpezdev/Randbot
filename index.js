@@ -81,12 +81,14 @@ client.on('messageCreate', async message => {
             .setTitle('¡Comandos disponibles!')
             .setDescription(`¡Hola! Soy Randbot, técnicamente un Valorant Randomizer xd, te ayudaré a elegir un personaje aleatorio para jugar en Valorant. ¡Aquí tienes los comandos disponibles!`)
             .addFields(
+                { name: `${PREFIX}channel here`, value: `Permite establecer el servidor por defecto para interactuar con el bot (¡Debes hacerlo!).` },
                 { name: `${PREFIX}randomize`, value: `Genera un personaje aleatorio para jugar en Valorant.` },
                 { name: `${PREFIX}randomize [mapa]`, value: `Genera un personaje aleatorio para jugar en Valorant en un mapa específico. Ejemplo: ${PREFIX}randomize Ascent` },
                 { name: `${PREFIX}randomize [mapa] [rol]`, value: `Genera un personaje aleatorio para jugar en Valorant en un mapa y rol específico. Ejemplo: ${PREFIX}randomize Ascent Duelista` },
                 { name: `${PREFIX}roles`, value: `Muestra los roles disponibles en Valorant.` },
                 { name: `${PREFIX}personajes`, value: `Muestra los personajes disponibles en Valorant.` },
                 { name: `${PREFIX}mapas`, value: `Muestra los mapas disponibles en Valorant.` },
+                { name: `${PREFIX}changePrefix`, value: `Permite cambiar el prefijo de '!' a por ejemplo '-' (-r) .` },
                 { name: `${PREFIX}help`, value: `Muestra los comandos disponibles.` },
             )
             .setTimestamp();
