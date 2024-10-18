@@ -27,6 +27,7 @@ app.listen(PORT, () => {
 
 client.on('messageCreate', async message => {
     if (message.author.bot) return; 
+    message.content = message.content.toLowerCase();
     const args = message.content.split(' ');
     let map = args[1];
     let rol = args[2];
