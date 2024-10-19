@@ -17,7 +17,7 @@ const client = new Client({
 let targetChannelId = null;
 
 client.once('ready', () => {
-    console.log(`¡Bot en línea. Versión 2.6.3!`);
+    console.log(`¡Bot en línea. Versión 2.7!`);
     loadAgentes(); 
 });
 
@@ -32,42 +32,42 @@ client.on('messageCreate', async message => {
     let map = args[1];
     let rol = args[2];
 
-    const mensaje = capitalizeFirstLetter(message.content.toLowerCase())
+    const mensaje = message.content.toLowerCase();
 
     console.log('Comando recibido:', mensaje);
     console.log('Mapa:', map);
     console.log('Rol:', rol);
 
-    if (message.content === `${PREFIX}channel here`) {
+    if (mensaje === `${PREFIX}channel here`) {
         targetChannelId = message.channel.id;
         message.channel.send('Este canal ha sido configurado.');
     }
 
     if (targetChannelId && message.channel.id === targetChannelId) {
         
-        if (message.content.startsWith(`${PREFIX}servidores`)) {
+        if (mensaje.startsWith(`${PREFIX}servidores`)) {
             const guilds = client.guilds.cache.map(guild => guild.name).
             message.channel.send(`Estoy en los siguientes servidores:\n${guilds}`);
             return;
         }
         
-        if (message.content.startsWith(`${PREFIX}roles`)) {
+        if (mensaje.startsWith(`${PREFIX}roles`)) {
             message.channel.send(`Roles disponibles: ${roles.join(', ')}`);
             return;
         }
         
-        if (message.content.startsWith(`${PREFIX}personajes`)) {
+        if (mensaje.startsWith(`${PREFIX}personajes`)) {
             const personajesArray = Object.values(personajes).flat().map(agent => agent.displayName);
             message.channel.send(`Personajes disponibles: ${personajesArray.join(', ')}`);
             return;
         }
         
-        if (message.content.startsWith(`${PREFIX}mapas`)) {
+        if (mensaje.startsWith(`${PREFIX}mapas`)) {
             message.channel.send(`Mapas disponibles: ${Object.keys(mapas).join(', ')}`);
             return;
         }
         
-        if (message.content.startsWith(`${PREFIX}randhelp`) || message.content.startsWith(`${PREFIX}rhelp`)) {
+        if (mensaje.startsWith(`${PREFIX}randhelp`) || mensaje.startsWith(`${PREFIX}rhelp`)) {
             const embed = new EmbedBuilder()
             .setColor('#0099ff')
             .setTitle('¡Comandos disponibles!')
@@ -89,7 +89,7 @@ client.on('messageCreate', async message => {
             return;
         }
         
-        if (message.content.startsWith(`${PREFIX}randomize`) || message.content.startsWith(`${PREFIX}r`)) {
+        if (mensaje.startsWith(`${PREFIX}randomize`) || mensaje.startsWith(`${PREFIX}r`)) {
             const author = message.author;
             const username = author.username; 
             const avatarURL = author.displayAvatarURL(); 
