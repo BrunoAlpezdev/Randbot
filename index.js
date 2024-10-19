@@ -17,7 +17,7 @@ const client = new Client({
 let targetChannelId = null;
 
 client.once('ready', () => {
-    console.log(`¡Bot en línea. Versión 2.7!`);
+    console.log(`¡Bot en línea. Versión 2.8!`);
     loadAgentes(); 
 });
 
@@ -29,8 +29,10 @@ client.on('messageCreate', async message => {
     if (message.author.bot) return; 
     
     const args = message.content.split(' ');
-    let map = args[1];
-    let rol = args[2];
+    let mapArg = args[1];
+    let rolArg = args[2];
+    let map = mapArg ? mapArg.charAt(0).toUpperCase() + mapArg.slice(1).toLowerCase() : null;
+    let rol = rolArg ? rolArg.charAt(0).toUpperCase() + rolArg.slice(1).toLowerCase() : null;
 
     const mensaje = message.content.toLowerCase();
 
@@ -112,7 +114,7 @@ client.on('messageCreate', async message => {
             }
             
             if (map) {
-                if (!mapas[capitalizeFirstLetter(map)]) {
+                if (!mapas[map]) {
                     message.channel.send(`El mapa "${map}" no es válido. Por favor, elige uno de los siguientes: ${Object.keys(mapas).join(', ')}`);
                     return;
                 }
