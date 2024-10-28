@@ -1,13 +1,13 @@
-# Randbot 2.0
+# Randbot 3.0
 
 Randbot es un bot de discord creado para elegir por ti, un agente en Valorant, ademas de poder elegir según el mapa deseado
 
 ## Comandos
 
-!randomize
+$randomize
 para un agente y un rol aleatorio
 
-!randomize [Mapa] // Por ejemplo Breeze
+$randomize [Mapa] // Por ejemplo Breeze
 para un agente y un rol aleatorio según el mapa
 
 ## Características

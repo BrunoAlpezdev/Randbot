@@ -1,7 +1,7 @@
-// Release 2.0
+// Release 3.0
 const { personajes, capitalizeFirstLetter, loadAgentes, getMap } = require('./methods.js');
 const { Client, GatewayIntentBits, EmbedBuilder } = require('discord.js');
-const { PREFIX, roles, mapas, rolesMap } = require('./data.js');
+const { PREFIX, RELEASE, roles, mapas, rolesMap } = require('./data.js');
 const PORT = process.env.PORT || 3000; 
 const express = require('express'); 
 const app = express(); 
@@ -17,7 +17,7 @@ const client = new Client({
 let targetChannelId = null;
 
 client.once('ready', () => {
-    console.log(`¡Bot en línea. Versión 2.8!`);
+    console.log(`¡Bot en línea. Versión ${RELEASE}!`);
     loadAgentes(); 
 });
 
@@ -26,7 +26,11 @@ app.listen(PORT, () => {
 });
 
 client.on('messageCreate', async message => {
+    // Si el mensaje es del bot, no hacer nada.
     if (message.author.bot) return; 
+
+    // Si el mensaje no empieza con el prefijo, no hacer nada.
+    if (!message.content.startsWith(PREFIX)) return;
     
     const args = message.content.split(' ');
     let mapArg = args[1];

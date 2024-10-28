@@ -1,5 +1,6 @@
-// Release 2.0
-const PREFIX = '!';
+// Release 3.0
+const PREFIX = '$';
+const RELEASE = '3.0';
 const roles = ['Duelista', 'Centinela', 'Controlador', 'Iniciador'];
 const mapas = {
     'Ascent': {
@@ -94,5 +95,6 @@ module.exports = {
     PREFIX,
     roles,
     mapas,
-    rolesMap
+    rolesMap,
+    RELEASE
 };
