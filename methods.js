@@ -1,5 +1,5 @@
 // Release 3.0
-const axios = require('axios');
+import axios from 'axios';
 
 const personajes = {}; 
 
