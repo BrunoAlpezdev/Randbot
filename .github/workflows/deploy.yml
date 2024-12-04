@@ -29,10 +29,10 @@ jobs:
           node-version: lts/*
 
       - name: Install step
-        run: "bun i"
+        run: "pnpm i"
 
       - name: Build step
-        run: "bun build"
+        run: "pnpm build"
 
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
