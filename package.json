@@ -1,6 +1,7 @@
 {
   "name": "randbot",
-  "version": "3.0.0",
+  "type": "commonjs",
+  "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
