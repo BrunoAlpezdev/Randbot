@@ -39,6 +39,6 @@ jobs:
         with:
           project: "randbot-valorant"
           entrypoint: "index.js"
-          root: "/"
+          root: ""
           
           
