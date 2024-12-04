@@ -40,7 +40,7 @@ async function getMap(mapName) {
     }
 }
 
-module.exports = {
+export {
     personajes,
     capitalizeFirstLetter,
     loadAgentes,
