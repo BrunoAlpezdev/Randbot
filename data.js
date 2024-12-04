@@ -91,7 +91,7 @@ const rolesMap = {
     'Ini': 'Iniciador'
 };
 
-export {
+module.exports = {
     PREFIX,
     roles,
     mapas,

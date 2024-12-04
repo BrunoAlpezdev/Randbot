@@ -1,5 +1,5 @@
 // Release 3.0
-import axios from 'axios';
+const axios = require('axios');
 
 const personajes = {}; 
 
@@ -40,7 +40,7 @@ async function getMap(mapName) {
     }
 }
 
-export {
+module.exports = {
     personajes,
     capitalizeFirstLetter,
     loadAgentes,
