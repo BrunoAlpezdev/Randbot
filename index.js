@@ -25,6 +25,14 @@ app.listen(PORT, () => {
     console.log(`Servidor escuchando en el puerto ${PORT}`);
 });
 
+// Health check endpoint
+app.get('/health', (req, res) => {
+    res.status(200).json({
+        status: 'success',
+        message: 'Bot is running smoothly',
+    });
+});
+
 client.on('messageCreate', async message => {
     // Si el mensaje es del bot, no hacer nada.
     if (message.author.bot) return; 
